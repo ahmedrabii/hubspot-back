@@ -4,14 +4,21 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CompanyRepository;
+use App\Traites\SourceEntityTrait;
+use App\Traites\TimeStampEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource]
 class Company
 {
+
+    use TimeStampEntityTrait;
+    use SourceEntityTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -209,4 +216,6 @@ class Company
 
         return $this;
     }
+
+
 }

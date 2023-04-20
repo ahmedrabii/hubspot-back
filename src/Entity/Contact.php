@@ -4,12 +4,17 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ContactRepository;
+use App\Traites\SourceEntityTrait;
+use App\Traites\TimeStampEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource]
 class Contact
 {
+    use TimeStampEntityTrait;
+    use SourceEntityTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
