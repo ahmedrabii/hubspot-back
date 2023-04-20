@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait SourceEntityTrait
 {
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $source = null;
 

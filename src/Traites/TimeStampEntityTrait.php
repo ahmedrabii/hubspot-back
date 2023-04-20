@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Traites;
 
 use DateTimeImmutable;

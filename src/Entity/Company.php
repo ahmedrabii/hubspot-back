@@ -15,7 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource]
 class Company
 {
-
     use TimeStampEntityTrait;
     use SourceEntityTrait;
 
