@@ -3,33 +3,50 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\ContactRepository;
 use App\Traites\SourceEntityTrait;
 use App\Traites\TimeStampEntityTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ContactRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(normalizationContext: ['groups' => ['contact:get:unit']]),
+        new GetCollection(normalizationContext: ['groups' => ['contact:get:list']])
+    ]
+)]
+#[ApiFilter(SearchFilter::class, properties: ['company' => 'exact'])]
 class Contact
 {
     use TimeStampEntityTrait;
     use SourceEntityTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['contact:get:list', 'contact:get:unit'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['contact:get:list', 'contact:get:unit'])]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['contact:get:list', 'contact:get:unit'])]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['contact:get:list', 'contact:get:unit'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['contact:get:list', 'contact:get:unit'])]
     private ?string $jobTitle = null;
 
     #[ORM\ManyToOne(inversedBy: 'contacts')]
@@ -37,6 +54,7 @@ class Contact
     private ?Company $company = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['contact:get:list', 'contact:get:unit'])]
     private ?string $phone = null;
 
     public function getId(): ?int

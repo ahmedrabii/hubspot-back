@@ -2,17 +2,28 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\CompanyRepository;
 use App\Traites\SourceEntityTrait;
 use App\Traites\TimeStampEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(normalizationContext: ['groups' => ['company:get:unit', 'contact:get:unit']]),
+        new GetCollection(normalizationContext: ['groups' => ['company:get:list']])
+    ]
+)]
+#[ApiFilter(SearchFilter::class, properties: ['industry' => 'partial'])]
 class Company
 {
     use TimeStampEntityTrait;
@@ -21,39 +32,51 @@ class Company
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['company:get:list', 'company:get:unit'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['company:get:list', 'company:get:unit'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['company:get:list', 'company:get:unit'])]
     private ?string $industry = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['company:get:list', 'company:get:unit'])]
     private ?string $city = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['company:get:list', 'company:get:unit'])]
     private ?string $country = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['company:get:list', 'company:get:unit'])]
     private ?string $website = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['company:get:list', 'company:get:unit'])]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['company:get:list', 'company:get:unit'])]
     private ?string $zip = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['company:get:list', 'company:get:unit'])]
     private ?int $numberOfEmployees = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['company:get:list', 'company:get:unit'])]
     private ?string $annualRevenue = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['company:get:list', 'company:get:unit'])]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'company', targetEntity: Contact::class, orphanRemoval: true)]
+    #[Groups(['company:get:unit'])]
     private Collection $contacts;
 
     public function __construct()
