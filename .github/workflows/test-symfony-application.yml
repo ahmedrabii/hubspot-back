@@ -32,7 +32,7 @@ jobs:
       - name: Generate SSL Key for JWT
         run: php bin/console lexik:jwt:generate-keypair
       - name: Create Database
-        run: php bin/console doctrine:database:create
+        run: php bin/console doctrine:database:create --env=test
       - name: Migrate database
         run: php bin/console doctrine:schema:update --force -q --no-interaction --env=test
       - name: Loading fixtures
