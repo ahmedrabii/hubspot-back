@@ -19,7 +19,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     operations: [
         new Get(normalizationContext: ['groups' => ['contact:get:unit']]),
         new GetCollection(normalizationContext: ['groups' => ['contact:get:list']])
-    ]
+    ],
+    paginationItemsPerPage: 3
 )]
 #[ApiFilter(SearchFilter::class, properties: ['company' => 'exact'])]
 class Contact

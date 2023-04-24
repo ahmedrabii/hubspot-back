@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Company;
 use App\Traites\RepositoryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,9 +19,20 @@ use Doctrine\Persistence\ManagerRegistry;
 class CompanyRepository extends ServiceEntityRepository
 {
     use RepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Company::class);
+    }
+
+    public function extractIndustries(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.industry')
+            ->orderBy('c.industry', 'ASC')
+            ->distinct()
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_SCALAR_COLUMN);
     }
 
 //    /**

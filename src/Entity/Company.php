@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use App\Controller\IndustryController;
 use App\Repository\CompanyRepository;
 use App\Traites\SourceEntityTrait;
 use App\Traites\TimeStampEntityTrait;
@@ -19,9 +20,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     operations: [
+        new GetCollection(
+            uriTemplate: '/companies/industry',
+            controller: IndustryController::class,
+            openapiContext: [
+                'parameters' => [],
+            ],
+            name: 'industry'
+        ),
         new Get(normalizationContext: ['groups' => ['company:get:unit', 'contact:get:unit']]),
-        new GetCollection(normalizationContext: ['groups' => ['company:get:list']])
-    ]
+        new GetCollection(normalizationContext: ['groups' => ['company:get:list']]),
+    ],
+    paginationItemsPerPage: 3
 )]
 #[ApiFilter(SearchFilter::class, properties: ['industry' => 'partial'])]
 class Company
