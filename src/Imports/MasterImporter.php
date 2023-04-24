@@ -19,7 +19,7 @@ class MasterImporter
     {
     }
 
-    public function import(Closure $callback = null)
+    public function import(Closure $callback = null): void
     {
         foreach (self::IMPORTERS as $importer) {
             /** @var ImporterInterface $importerService */

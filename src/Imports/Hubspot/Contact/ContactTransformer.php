@@ -4,7 +4,6 @@ namespace App\Imports\Hubspot\Contact;
 
 use App\Entity\Company;
 use App\Entity\Contact;
-use App\Imports\Contracts\CompanyTransformerInterface;
 use App\Imports\Contracts\ContactTransformerInterface;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,7 +13,7 @@ class ContactTransformer implements ContactTransformerInterface
 {
     public const SOURCE = 'HubSpot';
 
-    private $companies = [];
+    private array $companies = [];
 
     public function __construct(private readonly EntityManagerInterface $em)
     {

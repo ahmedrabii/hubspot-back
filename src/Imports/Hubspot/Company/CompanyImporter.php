@@ -6,6 +6,12 @@ use App\Entity\Company;
 use App\Entity\Contact;
 use App\Imports\Contracts\ImporterInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class CompanyImporter implements ImporterInterface
 {
@@ -16,6 +22,14 @@ class CompanyImporter implements ImporterInterface
     ) {
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     * @throws Exception
+     */
     public function import(): void
     {
         $data = $this->getContent();
@@ -31,6 +45,13 @@ class CompanyImporter implements ImporterInterface
         }
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     */
     public function getContent(): array
     {
         $response = $this->builder->getClient()->request(

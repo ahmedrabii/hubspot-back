@@ -2,8 +2,13 @@
 
 namespace App\Traites;
 
+use Doctrine\DBAL\Exception;
+
 trait RepositoryTrait
 {
+    /**
+     * @throws Exception
+     */
     public function truncate(): void
     {
         $connection = $this->getEntityManager()->getConnection();
