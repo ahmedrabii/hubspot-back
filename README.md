@@ -59,6 +59,11 @@ symfony server:start  -d
 ```sh
 https://127.0.0.1:8000/api/docs
 ```
+### Execute Import Command
+
+```sh
+php bin/console app:import 
+```
 
 ### Execute tests via PHPUnit
 
