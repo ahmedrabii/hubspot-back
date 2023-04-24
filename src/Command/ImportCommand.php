@@ -23,7 +23,6 @@ class ImportCommand extends Command
     {
         parent::__construct($name);
 
-
     }
 
     protected function configure(): void

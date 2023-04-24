@@ -22,14 +22,17 @@ class ContactClientBuilder implements ClientBuilderInterface
     public string $url = '';
     private bool $hasNext = false;
 
-    public function __construct(private HttpClientInterface $client)
-    {
+    public function __construct(
+        private HttpClientInterface $client,
+        private readonly string     $hubspotApiKey,
+        private readonly string     $hubspotContactUrl
+    ) {
     }
 
     public function initCredentials(): void
     {
-        $this->credentials = '';
-        $this->url = 'https://api.hubapi.com/crm/v3/objects/contacts';
+        $this->credentials = $this->hubspotApiKey;
+        $this->url = $this->hubspotContactUrl;
     }
 
     public function hasNext(array $content = []): bool
